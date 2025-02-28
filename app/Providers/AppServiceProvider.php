@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\ServiceProvider;
 use Opcodes\LogViewer\Facades\LogViewer;
 use Override;
 
@@ -27,17 +29,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->setupLogViewer();
+        // $this->setupLogViewer();
         $this->configModels();
         $this->configCommands();
         $this->configUrls();
         $this->configDate();
     }
 
-     /**
-     * Sets up the LogViewer authentication to restrict access
-     * based on whether the authenticated user is an admin.
-     */
+    /**
+    * Sets up the LogViewer authentication to restrict access
+    * based on whether the authenticated user is an admin.
+    */
     private function setupLogViewer(): void
     {
         LogViewer::auth(fn ($request) => $request->user()?->is_admin);
