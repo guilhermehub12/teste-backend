@@ -20,12 +20,12 @@ class UpdateUserRequest extends BaseUserRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|min:4',
-            'email' => 'required|email',
-            'password' => 'required|min:8',
-            'telefone' => 'required|min:10|max:20',
-            'is_admin' => 'boolean',
-            'is_valid' => 'boolean',
+            'name' => 'sometimes|required|min:4',
+            'email' => 'sometimes|required|email',
+            'password' => 'sometimes|required|min:8',
+            'telefone' => 'sometimes|required|min:10|max:20',
+            'is_admin' => 'sometimes|boolean',
+            'is_valid' => 'sometimes|boolean',
         ];
     }
 }
