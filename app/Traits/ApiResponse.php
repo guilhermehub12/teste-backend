@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Traits;
+
+use Illuminate\Http\JsonResponse;
+
+trait ApiResponse
+{
+    public function sendResponse($token = null, $result, $message): JsonResponse
+    {
+        $response = [
+            'success' => true,
+            'message' => $message,
+            'data' => $result,
+            'token' => $token,
+        ];
+
+        return response()->json($response, 200);
+    }
+
+    public function sendError($error, $errorMessage = [], $code = 404): JsonResponse
+    {
+        $response = [
+            'success' => false,
+            'message' => $error,
+        ];
+
+        if (!empty($errorMessage)) {
+            $response['data'] = $errorMessage;
+        }
+
+        return response()->json($response, $code);
+    }
+}
