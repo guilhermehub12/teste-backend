@@ -3,7 +3,7 @@
 namespace App\Repositories\Api;
 
 use App\Interfaces\Api\UserRepositoryInterface;
-use App\Models\User;
+use App\Models\Api\User;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;

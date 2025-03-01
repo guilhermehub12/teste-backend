@@ -5,7 +5,7 @@ namespace App\Services\Api;
 use App\Constants\AuthConstants;
 use App\DTO\Api\RegisterDTO;
 use App\Http\Resources\Api\UserResource;
-use App\Models\User;
+use App\Models\Api\User;
 
 class AuthService
 {

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Api\User\StoreUserRequest;
 use App\Http\Requests\Api\User\UpdateUserRequest;
 use App\Http\Resources\Api\UserResource;
-use App\Models\User;
+use App\Models\Api\User;
 use App\Services\Api\UserService;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\JsonResponse;
