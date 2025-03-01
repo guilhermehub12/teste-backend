@@ -12,8 +12,11 @@ trait ApiResponse
             'success' => true,
             'message' => $message,
             'data' => $result,
-            'token' => $token,
         ];
+
+        if ($token !== null) {
+            $response['token'] = $token;
+        }
 
         return response()->json($response, 200);
     }
