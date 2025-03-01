@@ -14,9 +14,7 @@ Route::middleware(['cors:api', 'json.response'])->group( function () {
         ->middleware(ThrottleRequests::using('register'));
     Route::post('auth/login', [PassportAuthController::class, 'login'])
         ->middleware(ThrottleRequests::using('login'));
-    Route::get('/', function () {
-        return "APmmI";
-    });
+        
     Route::middleware('auth:api')->group( function () 
     {
         Route::post('auth/logout', [PassportAuthController::class, 'logout']);
