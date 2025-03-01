@@ -8,9 +8,11 @@ use App\Interfaces\Api\UserRepositoryInterface;
 use App\Repositories\Api\UserRepository;
 use App\Services\Api\UserService;
 use Carbon\CarbonImmutable;
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Opcodes\LogViewer\Facades\LogViewer;
@@ -42,6 +44,7 @@ class AppServiceProvider extends ServiceProvider
         $this->configUrls();
         $this->configDate();
         Passport::hashClientSecrets();
+        $this->configRateLimiting();
     }
 
     /**
@@ -94,5 +97,19 @@ class AppServiceProvider extends ServiceProvider
     private function configDate(): void
     {
         Date::use(CarbonImmutable::class);
+    }
+
+
+    private function configRateLimiting(): void
+    {
+        RateLimiter::for('register', function ($request) {
+            return Limit::perMinute(1)->by($request->email);
+        });
+        RateLimiter::for('login', function ($request) {
+            return Limit::perMinute(1)->by($request->email);
+        });
+        RateLimiter::for('api', function ($request) {
+            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+        });
     }
 }
