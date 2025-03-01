@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Services\Api;
 
 use App\Constants\AuthConstants;
@@ -11,11 +13,13 @@ class AuthService
 {
     public function __construct(
         protected UserService $userService
-    ) {}
+    ) {
+    }
 
     public function register(RegisterDTO $dto): User
     {
         $userData = (new UserResource($dto))->toArray(request());
+
         return $this->userService->create($userData);
     }
 

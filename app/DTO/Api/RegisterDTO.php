@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\DTO\Api;
 
 use App\Http\Requests\Api\User\StoreUserRequest;
@@ -13,8 +15,8 @@ class RegisterDTO
         public readonly string $telefone,
         public readonly bool $is_admin,
         public readonly bool $is_valid
-
-    ) {}
+    ) {
+    }
 
     public static function fromRequest(StoreUserRequest $request): self
     {
@@ -36,8 +38,8 @@ class RegisterDTO
     public function toArray(): array
     {
         return [
-            'name' => $this->name,
-            'email' => $this->email,
+            'name'     => $this->name,
+            'email'    => $this->email,
             'password' => $this->password,
             'telefone' => $this->telefone,
             'is_admin' => $this->is_admin,

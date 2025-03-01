@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Requests\Api\User;
+declare(strict_types = 1);
 
-use Faker\Provider\Base;
+namespace App\Http\Requests\Api\User;
 
 class StoreUserRequest extends BaseUserRequest
 {
@@ -22,8 +22,8 @@ class StoreUserRequest extends BaseUserRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|min:4',
-            'email' => 'required|email',
+            'name'     => 'required|min:4',
+            'email'    => 'required|email',
             'password' => 'required|min:8',
             'telefone' => 'required|min:10|max:20',
             'is_admin' => 'boolean',

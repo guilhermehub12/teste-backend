@@ -1,24 +1,26 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Constants\AuthConstants;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
 use App\Http\Requests\Api\User\StoreUserRequest;
+
 use App\Http\Requests\Api\User\UpdateUserRequest;
 use App\Http\Resources\Api\UserResource;
-use App\Models\Api\User;
 use App\Services\Api\UserService;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
     public function __construct(
         private UserService $userService
-    ) {}
+    ) {
+    }
 
     /**
      * Display a listing of the resource.
@@ -58,14 +60,14 @@ class UserController extends Controller
 
         if ($user === false) {
             return $this->sendError(
-                error: AuthConstants::MESSAGES['user_not_found'], 
+                error: AuthConstants::MESSAGES['user_not_found'],
                 code: Response::HTTP_NOT_FOUND
             );
         }
 
         return $this->sendResponse(
-            token: null, 
-            result: new UserResource($user), 
+            token: null,
+            result: new UserResource($user),
             message: AuthConstants::MESSAGES['user_found']
         );
     }
@@ -79,9 +81,10 @@ class UserController extends Controller
 
         if ($user !== false) {
             return $this->sendResponse(
-                token: null, 
-                result: new UserResource($user), 
-                message: AuthConstants::MESSAGES['user_updated']);
+                token: null,
+                result: new UserResource($user),
+                message: AuthConstants::MESSAGES['user_updated']
+            );
         }
 
         return $this->sendError(
@@ -99,8 +102,8 @@ class UserController extends Controller
 
         if ($user !== false) {
             return $this->sendResponse(
-                token: null, 
-                result: [], 
+                token: null,
+                result: [],
                 message: AuthConstants::MESSAGES['user_deleted']
             );
         }

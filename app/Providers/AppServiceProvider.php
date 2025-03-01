@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
-use Opcodes\LogViewer\Facades\LogViewer;
 use Laravel\Passport\Passport;
+use Opcodes\LogViewer\Facades\LogViewer;
 use Override;
 
 class AppServiceProvider extends ServiceProvider
@@ -98,7 +98,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Date::use(CarbonImmutable::class);
     }
-
 
     private function configRateLimiting(): void
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Repositories\Api;
 
 use App\Interfaces\Api\UserRepositoryInterface;
@@ -7,13 +9,13 @@ use App\Models\Api\User;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class UserRepository implements UserRepositoryInterface
 {
     public function getAll(Request $request)
     {
         $perPage = $request->get('per_page', 5);
+
         try {
             return User::paginate($perPage);
         } catch (Exception $ex) {
@@ -25,6 +27,7 @@ class UserRepository implements UserRepositoryInterface
     {
         try {
             $user = User::create($data);
+
             return $user;
         } catch (Exception $ex) {
             throw $ex;
@@ -36,6 +39,7 @@ class UserRepository implements UserRepositoryInterface
         try {
             $user = User::findOrFail($id);
             $user->update($data);
+
             return $user;
         } catch (ModelNotFoundException $ex) {
             return false;
@@ -47,12 +51,11 @@ class UserRepository implements UserRepositoryInterface
         try {
             $user = User::findOrFail($id);
             $user->delete();
+
             return response()->noContent();
         } catch (ModelNotFoundException $ex) {
             return false;
         }
-
-
     }
 
     public function findById($id)
@@ -62,6 +65,7 @@ class UserRepository implements UserRepositoryInterface
         } catch (ModelNotFoundException $ex) {
             return false;
         }
+
         return $user;
     }
 }

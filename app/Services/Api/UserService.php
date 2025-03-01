@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Services\Api;
 
 use App\Interfaces\Api\UserRepositoryInterface;
@@ -9,8 +11,8 @@ class UserService
 {
     public function __construct(
         protected UserRepositoryInterface $userRepositoryInterface
-    )
-    { }
+    ) {
+    }
 
     public function getAll(Request $request)
     {

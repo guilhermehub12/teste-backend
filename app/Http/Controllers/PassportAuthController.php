@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Controllers;
 
 use App\Constants\AuthConstants;
@@ -20,13 +22,14 @@ class PassportAuthController extends Controller
 {
     public function __construct(
         private readonly AuthService $authService
-    ) {}
+    ) {
+    }
 
     public function register(StoreUserRequest $request): JsonResponse
     {
         try {
-            $dto = RegisterDTO::fromRequest($request);
-            $user = $this->authService->register($dto);
+            $dto   = RegisterDTO::fromRequest($request);
+            $user  = $this->authService->register($dto);
             $token = $this->authService->createUserToken($user);
 
             return $this->sendResponse(
@@ -48,7 +51,7 @@ class PassportAuthController extends Controller
             $credentials = LoginDTO::fromRequest($request);
 
             if (Auth::attempt($credentials->toArray())) {
-                $user = Auth::user();
+                $user  = Auth::user();
                 $token = $this->authService->createUserToken($user);
 
                 return $this->sendResponse(

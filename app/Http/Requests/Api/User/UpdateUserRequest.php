@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Requests\Api\User;
 
 class UpdateUserRequest extends BaseUserRequest
@@ -20,8 +22,8 @@ class UpdateUserRequest extends BaseUserRequest
     public function rules(): array
     {
         return [
-            'name' => 'sometimes|required|min:4',
-            'email' => 'sometimes|required|email',
+            'name'     => 'sometimes|required|min:4',
+            'email'    => 'sometimes|required|email',
             'password' => 'sometimes|required|min:8',
             'telefone' => 'sometimes|required|min:10|max:20',
             'is_admin' => 'sometimes|boolean',

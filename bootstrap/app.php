@@ -17,7 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'json.response' => App\Http\Middleware\ForceJsonResponse::class,
-            'cors' => App\Http\Middleware\Cors::class,
+            'cors'          => App\Http\Middleware\Cors::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
@@ -25,7 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
-                'trace' => $e->getTrace(),
+                'trace'   => $e->getTrace(),
             ], 500);
         });
     })->create();

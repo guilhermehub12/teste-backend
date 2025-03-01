@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Requests\Api\User;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -22,12 +24,12 @@ class BaseUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'Nome',
-            'email' => 'E-mail',
+            'name'     => 'Nome',
+            'email'    => 'E-mail',
             'password' => 'Senha',
             'telefone' => 'Telefone',
             'is_admin' => 'Administrador',
-            'is_valid' => 'Ativo'
+            'is_valid' => 'Ativo',
         ];
     }
 }

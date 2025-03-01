@@ -9,5 +9,4 @@ use App\Traits\ApiResponse;
 abstract class Controller
 {
     use ApiResponse;
-
 }

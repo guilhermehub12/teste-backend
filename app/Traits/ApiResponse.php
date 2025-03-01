@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Traits;
 
 use Illuminate\Http\JsonResponse;
@@ -11,7 +13,7 @@ trait ApiResponse
         $response = [
             'success' => true,
             'message' => $message,
-            'data' => $result,
+            'data'    => $result,
         ];
 
         if ($token !== null) {
@@ -28,7 +30,7 @@ trait ApiResponse
             'message' => $error,
         ];
 
-        if (!empty($errorMessage)) {
+        if (! empty($errorMessage)) {
             $response['data'] = $errorMessage;
         }
 
