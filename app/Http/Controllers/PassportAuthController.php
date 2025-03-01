@@ -10,10 +10,10 @@ use App\Http\Requests\Api\Auth\LoginRequest;
 use App\Http\Requests\Api\User\StoreUserRequest;
 use App\Http\Resources\Api\UserResource;
 use App\Services\Api\AuthService;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Passport\Exceptions\AuthenticationException;
 use Symfony\Component\HttpFoundation\Response;
 
 class PassportAuthController extends Controller
