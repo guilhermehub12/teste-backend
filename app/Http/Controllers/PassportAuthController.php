@@ -2,73 +2,90 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\AuthConstants;
+use App\DTO\Api\LoginDTO;
+use App\DTO\Api\RegisterDTO;
+use App\Exceptions\UserRegistrationException;
+use App\Http\Requests\Api\Auth\LoginRequest;
 use App\Http\Requests\Api\User\StoreUserRequest;
 use App\Http\Resources\Api\UserResource;
-use App\Models\User;
-use App\Services\Api\UserService;
+use App\Services\Api\AuthService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Passport\Exceptions\AuthenticationException;
+use Symfony\Component\HttpFoundation\Response;
 
 class PassportAuthController extends Controller
 {
     public function __construct(
-        protected UserService $userService
+        private readonly AuthService $authService
     ) {}
 
     public function register(StoreUserRequest $request): JsonResponse
     {
         try {
-            $data = $request->validated();
-            $user = $this->userService->create($data);
+            $dto = RegisterDTO::fromRequest($request);
+            $user = $this->authService->register($dto);
+            $token = $this->authService->createUserToken($user);
 
-            if (!empty($user)) {
-                \Log::info('Em rota de criar Token');
-
-                $token = $user->createToken('SoffiaAuthApp')->accessToken;
-
-                \Log::info('User created successfully', ['user_id' => $user->id]);
-
-                return $this->sendResponse(new UserResource($user), 'Usuário adicionado com sucesso.', $token);
-            }
-            \Log::error('User creation failed attempt in PassportAuthController(register)', ['data' => $data]);
-
-            return $this->sendError('Erro ao cadastrar o usuário. Verifique os dados fornecidos.', [], 422);
-        } catch (\Throwable $th) {
-            \Log::error('Registration error attempt in PassportAuthController(register)', [
-                'message' => $th->getMessage(),
-                'trace' => $th->getTraceAsString()
-            ]);
-            return $this->sendError("Erro ao cadastrar o usuário. Verifique os dados fornecidos.", [], 422);
+            return $this->sendResponse(
+                token: $token,
+                result: new UserResource($user),
+                message: AuthConstants::MESSAGES['register_success']
+            );
+        } catch (UserRegistrationException $e) {
+            return $this->sendError(
+                error: $e->getMessage(),
+                code: Response::HTTP_UNPROCESSABLE_ENTITY
+            );
         }
     }
 
-    public function login(Request $request): JsonResponse
+    public function login(LoginRequest $request): JsonResponse
     {
-        $data = [
-            'email' => $request->email,
-            'password' => $request->password
-        ];
+        try {
+            $credentials = LoginDTO::fromRequest($request);
 
-        if (auth()->attempt($data)) {
-            $token = auth()->user()->createToken('SoffiaAuthApp')->accessToken;
-            return $this->sendResponse(new UserResource(auth()->user()), 'Login realizado com sucesso.', $token);
-        } else {
-            return $this->sendError('Credenciais inválidas. Verifique seu email e senha.', [], 422);
+            if (Auth::attempt($credentials->toArray())) {
+                $user = Auth::user();
+                $token = $this->authService->createUserToken($user);
 
+                return $this->sendResponse(
+                    token: $token,
+                    result: new UserResource($user),
+                    message: AuthConstants::MESSAGES['login_success']
+                );
+            }
+
+            return $this->sendError(
+                error: AuthConstants::MESSAGES['invalid_credentials'],
+                code: Response::HTTP_UNAUTHORIZED
+            );
+        } catch (AuthenticationException $e) {
+            return $this->sendError(
+                error: $e->getMessage(),
+                code: Response::HTTP_UNAUTHORIZED
+            );
         }
     }
 
-    public function logout (Request $request) {
+    public function logout(Request $request)
+    {
         try {
             $token = $request->user()->token();
             $token->revoke();
-            return $this->sendResponse(null, 'Logout realizado com sucesso.', null);
+
+            return $this->sendResponse(
+                token: null,
+                result: null,
+                message: AuthConstants::MESSAGES['logout_success']
+            );
         } catch (\Throwable $th) {
-            \Log::error('Logout error attempt in PassportAuthController(logout)', [
-                'message' => $th->getMessage(),
-                'trace' => $th->getTraceAsString()
-            ]);
-            return $this->sendError('Erro ao realizar logout.', [], 422);
+            return $this->sendError(
+                error: AuthConstants::MESSAGES['logout_failed'],
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
     }
 }
