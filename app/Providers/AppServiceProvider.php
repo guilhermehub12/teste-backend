@@ -4,6 +4,9 @@ declare(strict_types = 1);
 
 namespace App\Providers;
 
+use App\Interfaces\Api\UserRepositoryInterface;
+use App\Repositories\Api\UserRepository;
+use App\Services\Api\UserService;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
@@ -11,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Opcodes\LogViewer\Facades\LogViewer;
+use Laravel\Passport\Passport;
 use Override;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,7 +25,10 @@ class AppServiceProvider extends ServiceProvider
     #[Override]
     public function register(): void
     {
-        //
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(UserService::class, function ($app) {
+            return new UserService($app->make(UserRepositoryInterface::class));
+        });
     }
 
     /**
@@ -34,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
         $this->configCommands();
         $this->configUrls();
         $this->configDate();
+        Passport::hashClientSecrets();
     }
 
     /**
