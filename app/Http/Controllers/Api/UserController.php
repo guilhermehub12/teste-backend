@@ -32,14 +32,14 @@ class UserController extends Controller
         return $this->sendResponse(
             token: null,
             result: UserResource::collection($users),
-            message: AuthConstants::MESSAGES['list_success']
+            message: AuthConstants::MESSAGES['LIST_SUCCESS']
         );
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreUserRequest $request): JsonResponse
     {
         $data = $request->all();
         $user = $this->userService->create($data);
@@ -47,20 +47,20 @@ class UserController extends Controller
         return $this->sendResponse(
             token: null,
             result: new UserResource($user),
-            message: AuthConstants::MESSAGES['register_success']
+            message: AuthConstants::MESSAGES['REGISTER_SUCCESS']
         );
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
         $user = $this->userService->findById($id);
 
         if ($user === false) {
             return $this->sendError(
-                error: AuthConstants::MESSAGES['user_not_found'],
+                error: AuthConstants::MESSAGES['USER_NOT_FOUND'],
                 code: Response::HTTP_NOT_FOUND
             );
         }
@@ -68,14 +68,14 @@ class UserController extends Controller
         return $this->sendResponse(
             token: null,
             result: new UserResource($user),
-            message: AuthConstants::MESSAGES['user_found']
+            message: AuthConstants::MESSAGES['USER_FOUND']
         );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, string $id)
+    public function update(UpdateUserRequest $request, string $id): JsonResponse
     {
         $user = $this->userService->update($request->validated(), $id);
 
@@ -83,12 +83,12 @@ class UserController extends Controller
             return $this->sendResponse(
                 token: null,
                 result: new UserResource($user),
-                message: AuthConstants::MESSAGES['user_updated']
+                message: AuthConstants::MESSAGES['USER_UPDATED']
             );
         }
 
         return $this->sendError(
-            error: AuthConstants::MESSAGES['user_updated_failed'],
+            error: AuthConstants::MESSAGES['USER_UPDATED_FAILED'],
             code: Response::HTTP_UNPROCESSABLE_ENTITY
         );
     }
@@ -96,7 +96,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): JsonResponse
     {
         $user = $this->userService->destroy($id);
 
@@ -104,12 +104,12 @@ class UserController extends Controller
             return $this->sendResponse(
                 token: null,
                 result: [],
-                message: AuthConstants::MESSAGES['user_deleted']
+                message: AuthConstants::MESSAGES['USER_DELETED']
             );
         }
 
         return $this->sendError(
-            error: AuthConstants::MESSAGES['user_not_found'],
+            error: AuthConstants::MESSAGES['USER_NOT_FOUND'],
             code: Response::HTTP_NOT_FOUND
         );
     }

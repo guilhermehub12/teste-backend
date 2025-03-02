@@ -35,7 +35,7 @@ class PassportAuthController extends Controller
             return $this->sendResponse(
                 token: $token,
                 result: new UserResource($user),
-                message: AuthConstants::MESSAGES['register_success']
+                message: AuthConstants::MESSAGES['REGISTER_SUCCESS']
             );
         } catch (UserRegistrationException $e) {
             return $this->sendError(
@@ -57,12 +57,12 @@ class PassportAuthController extends Controller
                 return $this->sendResponse(
                     token: $token,
                     result: new UserResource($user),
-                    message: AuthConstants::MESSAGES['login_success']
+                    message: AuthConstants::MESSAGES['LOGIN_SUCCESS']
                 );
             }
 
             return $this->sendError(
-                error: AuthConstants::MESSAGES['invalid_credentials'],
+                error: AuthConstants::MESSAGES['INVALID_CREDENTIALS'],
                 code: Response::HTTP_UNAUTHORIZED
             );
         } catch (AuthenticationException $e) {
@@ -81,11 +81,11 @@ class PassportAuthController extends Controller
 
             return $this->sendResponse(
                 result: null,
-                message: AuthConstants::MESSAGES['logout_success']
+                message: AuthConstants::MESSAGES['LOGOUT_SUCCESS']
             );
         } catch (\Throwable $th) {
             return $this->sendError(
-                error: AuthConstants::MESSAGES['logout_failed'],
+                error: AuthConstants::MESSAGES['LOGOUT_FAILED'],
                 code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -94,17 +94,15 @@ class PassportAuthController extends Controller
     public function profile(): JsonResponse
     {
         $user = auth()->user();
-        ds($user);
-        \Log::info('User profile:', ['user' => $user]);
         if ($user) {
             return $this->sendResponse(
                 token: null,
                 result: new UserResource($user),
-                message: AuthConstants::MESSAGES['profile_found']
+                message: AuthConstants::MESSAGES['PROFILE_FOUND']
             );
         }
         return $this->sendError(
-            error: AuthConstants::MESSAGES['profile_failed'],
+            error: AuthConstants::MESSAGES['PROFILE_FAILED'],
             code: Response::HTTP_INTERNAL_SERVER_ERROR
         );
     }
