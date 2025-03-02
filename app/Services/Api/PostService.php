@@ -23,6 +23,7 @@ class PostService
     public function getFilteredPosts(Request $request)
     {
         $filterDTO = PostFilterDTO::fromRequest($request);
+
         return $this->postRepositoryInterface->getFilteredPosts($filterDTO);
     }
 

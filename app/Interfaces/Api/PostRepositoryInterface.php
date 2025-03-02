@@ -4,8 +4,8 @@ declare(strict_types = 1);
 
 namespace App\Interfaces\Api;
 
-use Illuminate\Http\Request;
 use App\DTO\Api\PostFilterDTO;
+use Illuminate\Http\Request;
 
 interface PostRepositoryInterface
 {

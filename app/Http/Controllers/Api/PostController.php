@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Constants\PostConstants;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Post\StorePostRequest;
 
 use App\Http\Requests\Api\Post\UpdatePostRequest;
@@ -37,6 +39,7 @@ class PostController extends Controller
                 code: Response::HTTP_NOT_FOUND
             );
         }
+
         return $this->sendResponse(
             token: null,
             result: PostResource::collection($posts),
@@ -58,6 +61,7 @@ class PostController extends Controller
                 code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
+
         return $this->sendResponse(
             token: null,
             result: new PostResource($post),

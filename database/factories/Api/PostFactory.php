@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class PostFactory extends Factory
 {
     protected $model = Post::class;
+
     /**
      * Define the model's default state.
      *
@@ -23,10 +24,10 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->sentence(),
+            'title'   => fake()->sentence(),
             'content' => fake()->paragraph(),
             'user_id' => User::factory(),
-            'tags' => ['Laravel, PHP, API'],
+            'tags'    => ['Laravel, PHP, API'],
         ];
     }
 }

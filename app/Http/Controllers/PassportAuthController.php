@@ -94,6 +94,7 @@ class PassportAuthController extends Controller
     public function profile(): JsonResponse
     {
         $user = auth()->user();
+
         if ($user) {
             return $this->sendResponse(
                 token: null,
@@ -101,6 +102,7 @@ class PassportAuthController extends Controller
                 message: AuthConstants::MESSAGES['PROFILE_FOUND']
             );
         }
+
         return $this->sendError(
             error: AuthConstants::MESSAGES['PROFILE_FAILED'],
             code: Response::HTTP_INTERNAL_SERVER_ERROR

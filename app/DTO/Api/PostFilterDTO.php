@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\DTO\Api;
 
@@ -9,13 +9,14 @@ use Illuminate\Http\Request;
 class PostFilterDTO
 {
     public ?string $tag;
+
     public ?string $query;
 
     public function __construct(
         ?string $tag,
         ?string $query
     ) {
-        $this->tag = $tag;
+        $this->tag   = $tag;
         $this->query = $query;
     }
 

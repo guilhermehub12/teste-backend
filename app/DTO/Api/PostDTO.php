@@ -37,7 +37,7 @@ class PostDTO
             'title'   => $this->title,
             'content' => $this->content,
             'tags'    => $this->tags,
-            'user_id' => $this->user_id
+            'user_id' => $this->user_id,
         ];
     }
 }

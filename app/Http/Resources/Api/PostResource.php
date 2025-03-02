@@ -11,16 +11,16 @@ class PostResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'id' => $this->id,
-            'title' => $this->title,
+            'id'     => $this->id,
+            'title'  => $this->title,
             'author' => [
-                'id' => $this->author->id,
-                'nome' => $this->author->name,
+                'id'       => $this->author->id,
+                'nome'     => $this->author->name,
                 'telefone' => $this->author->telefone,
-                'email' => $this->author->email,
+                'email'    => $this->author->email,
             ],
             'content' => $this->content,
-            'tags' => $this->tags,
+            'tags'    => $this->tags,
         ];
     }
 
@@ -31,7 +31,7 @@ class PostResource extends JsonResource
                 'total'        => $resource->total(),
                 'per_page'     => $resource->perPage(),
                 'current_page' => $resource->currentPage(),
-                'last_page'    => $resource->lastPage()
+                'last_page'    => $resource->lastPage(),
             ]]);
         });
     }

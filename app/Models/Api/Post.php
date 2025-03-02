@@ -4,11 +4,11 @@ declare(strict_types = 1);
 
 namespace App\Models\Api;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\BaseModel;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-Class Post extends BaseModel
+class Post extends BaseModel
 {
     /** @use HasFactory<\Database\Factories\PostFactory> */
     use HasFactory;

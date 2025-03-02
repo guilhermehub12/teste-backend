@@ -6,19 +6,19 @@ namespace App\Traits;
 
 trait PostFiltered
 {
-    public function postDetailed($post) : array
+    public function postDetailed($post): array
     {
         return [
-            'id'         => $post->id,
-            'title'      => $post->title,
-            'author'    => [
-                'id'    => $post->user->id,
-                'name'  => $post->user->name,
-                'email' => $post->user->email,
+            'id'     => $post->id,
+            'title'  => $post->title,
+            'author' => [
+                'id'       => $post->user->id,
+                'name'     => $post->user->name,
+                'email'    => $post->user->email,
                 'telefone' => $post->user->telefone,
             ],
-            'content'    => $post->content,
-            'tags'       => $post->tags->pluck('name')->toArray()
+            'content' => $post->content,
+            'tags'    => $post->tags->pluck('name')->toArray(),
         ];
     }
 

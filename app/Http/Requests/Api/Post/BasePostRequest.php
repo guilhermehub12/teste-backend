@@ -24,9 +24,9 @@ class BasePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'Título do post',
+            'title'   => 'Título do post',
             'content' => 'Conteúdo do post',
-            'tags' => 'Tags do post',
+            'tags'    => 'Tags do post',
             'user_id' => 'ID do autor',
         ];
     }

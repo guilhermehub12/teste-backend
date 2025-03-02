@@ -1,15 +1,15 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Repositories\Api;
 
+use App\DTO\Api\PostFilterDTO;
 use App\Interfaces\Api\PostRepositoryInterface;
 use App\Models\Api\Post;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\DTO\Api\PostFilterDTO;
 
 class PostRepository implements PostRepositoryInterface
 {
@@ -18,7 +18,7 @@ class PostRepository implements PostRepositoryInterface
         $perPage = $request->get('per_page', 5);
 
         try {
-        return Post::with('author')->paginate($perPage);
+            return Post::with('author')->paginate($perPage);
         } catch (Exception $ex) {
             return false;
         }
