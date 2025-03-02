@@ -73,14 +73,13 @@ class PassportAuthController extends Controller
         }
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request): JsonResponse
     {
         try {
             $token = $request->user()->token();
             $token->revoke();
 
             return $this->sendResponse(
-                token: null,
                 result: null,
                 message: AuthConstants::MESSAGES['logout_success']
             );
@@ -90,5 +89,23 @@ class PassportAuthController extends Controller
                 code: Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
+    }
+
+    public function profile(): JsonResponse
+    {
+        $user = auth()->user();
+        ds($user);
+        \Log::info('User profile:', ['user' => $user]);
+        if ($user) {
+            return $this->sendResponse(
+                token: null,
+                result: new UserResource($user),
+                message: AuthConstants::MESSAGES['profile_found']
+            );
+        }
+        return $this->sendError(
+            error: AuthConstants::MESSAGES['profile_failed'],
+            code: Response::HTTP_INTERNAL_SERVER_ERROR
+        );
     }
 }

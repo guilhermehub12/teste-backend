@@ -22,5 +22,7 @@ class AuthConstants
         'user_updated'        => 'Usuário atualizado com sucesso',
         'user_updated_failed' => 'Usuário não pôde ser atualizado, tente novamente.',
         'user_deleted'        => 'Usuário deletado com sucesso',
+        'profile_found'       => 'Perfil encontrado',
+        'profile_failed'      => 'Perfil não encontrado',
     ];
 }
