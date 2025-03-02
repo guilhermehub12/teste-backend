@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Repositories\Api;
 
-use App\Interfaces\Api\UserRepositoryInterface;
+use App\Contracts\Repository\Api\UserRepositoryInterface;
 use App\Models\Api\User;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

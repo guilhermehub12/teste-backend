@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace App\Interfaces\Api;
+namespace App\Contracts\Repository\Api;
 
 use Illuminate\Http\Request;
 

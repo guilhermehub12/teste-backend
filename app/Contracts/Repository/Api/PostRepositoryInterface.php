@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace App\Interfaces\Api;
+namespace App\Contracts\Repository\Api;
 
 use App\DTO\Api\PostFilterDTO;
 use Illuminate\Http\Request;

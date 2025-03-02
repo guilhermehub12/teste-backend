@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace App\Services\Api;
 
 use App\DTO\Api\PostFilterDTO;
-use App\Interfaces\Api\PostRepositoryInterface;
+use App\Contracts\Repository\Api\PostRepositoryInterface;
 use Illuminate\Http\Request;
 
 class PostService

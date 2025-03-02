@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Services\Api;
 
-use App\Interfaces\Api\UserRepositoryInterface;
+use App\Contracts\Repository\Api\UserRepositoryInterface;
 use Illuminate\Http\Request;
 
 class UserService

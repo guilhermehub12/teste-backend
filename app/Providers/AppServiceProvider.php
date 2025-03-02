@@ -4,8 +4,8 @@ declare(strict_types = 1);
 
 namespace App\Providers;
 
-use App\Interfaces\Api\PostRepositoryInterface;
-use App\Interfaces\Api\UserRepositoryInterface;
+use App\Contracts\Repository\Api\PostRepositoryInterface;
+use App\Contracts\Repository\Api\UserRepositoryInterface;
 use App\Repositories\Api\PostRepository;
 use App\Repositories\Api\UserRepository;
 use App\Services\Api\PostService;
