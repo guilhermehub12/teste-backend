@@ -4,8 +4,11 @@ declare(strict_types = 1);
 
 namespace App\Providers;
 
+use App\Interfaces\Api\PostRepositoryInterface;
 use App\Interfaces\Api\UserRepositoryInterface;
+use App\Repositories\Api\PostRepository;
 use App\Repositories\Api\UserRepository;
+use App\Services\Api\PostService;
 use App\Services\Api\UserService;
 use Carbon\CarbonImmutable;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -31,6 +34,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UserService::class, function ($app) {
             return new UserService($app->make(UserRepositoryInterface::class));
         });
+
+        $this->app->bind(PostRepositoryInterface::class, PostRepository::class);
+        $this->app->bind(PostService::class, function ($app) {
+            return new PostService($app->make(PostRepositoryInterface::class));
+        });
     }
 
     /**
@@ -43,8 +51,13 @@ class AppServiceProvider extends ServiceProvider
         $this->configCommands();
         $this->configUrls();
         $this->configDate();
-        Passport::hashClientSecrets();
         $this->configRateLimiting();
+
+        Passport::tokensExpireIn(now()->addDays(15));
+        Passport::refreshTokensExpireIn(now()->addDays(30));
+        Passport::personalAccessTokensExpireIn(now()->addMonths(6));
+        Passport::enablePasswordGrant();
+        Passport::hashClientSecrets();
     }
 
     /**
