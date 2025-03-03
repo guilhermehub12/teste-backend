@@ -39,6 +39,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PostService::class, function ($app) {
             return new PostService($app->make(PostRepositoryInterface::class));
         });
+
+        $this->app->register(\L5Swagger\L5SwaggerServiceProvider::class);
     }
 
     /**
@@ -46,7 +48,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // $this->setupLogViewer();
+        $this->setupLogViewer();
         $this->configModels();
         $this->configCommands();
         $this->configUrls();
@@ -66,7 +68,7 @@ class AppServiceProvider extends ServiceProvider
     */
     private function setupLogViewer(): void
     {
-        LogViewer::auth(fn ($request) => $request->user()?->is_admin);
+        if (app()->environment('production')) LogViewer::auth(fn ($request) => $request->user()?->is_admin);
     }
 
     /**
@@ -101,7 +103,7 @@ class AppServiceProvider extends ServiceProvider
      */
     private function configUrls(): void
     {
-        URL::forceHttps();
+        if (app()->environment('production')) URL::forceHttps();
     }
 
     /**

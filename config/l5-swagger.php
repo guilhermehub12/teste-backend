@@ -5,14 +5,14 @@ return [
     'documentations' => [
         'default' => [
             'api' => [
-                'title' => 'L5 Swagger UI',
+                'title' => 'Api Doc',
             ],
 
             'routes' => [
                 /*
                  * Route for accessing api documentation interface
                  */
-                'api' => 'api/documentation',
+                'api' => 'api/doc',
             ],
             'paths' => [
                 /*
@@ -45,6 +45,8 @@ return [
                  */
                 'annotations' => [
                     base_path('app'),
+                    base_path('app/Http/Controllers'),
+                    base_path('app/Http/Controllers/Api'),
                 ],
             ],
         ],
@@ -66,7 +68,7 @@ return [
              */
             'middleware' => [
                 'api' => [
-                    Illuminate\Cookie\Middleware\EncryptCookies::class,
+                    \Illuminate\Cookie\Middleware\EncryptCookies::class,
                     \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
                     \Illuminate\Session\Middleware\StartSession::class,
                     \Illuminate\View\Middleware\ShareErrorsFromSession::class,
@@ -117,8 +119,8 @@ return [
              * @link https://zircote.github.io/swagger-php/reference/processors.html
              */
             'default_processors_configuration' => [
-            /** Example */
-            /**
+                /** Example */
+                /**
              * 'operationId.hash' => true,
              * 'pathFilter' => [
              * 'tags' => [
@@ -208,7 +210,6 @@ return [
                     'description' => 'Informe o token no formato: Bearer {token}.',
                     'name' => 'Authorization',
                     'in' => 'header',
-                    // 'scheme' => 'https',
                     // 'flows' => [
                     //     "password" => [
                     //         "authorizationUrl" => config('app.url') . '/oauth/authorize',
@@ -238,8 +239,8 @@ return [
                         'write'
                     ],
 
-                    'passport' => []
                     */
+                    'passport' => []
                 ],
             ],
         ],
