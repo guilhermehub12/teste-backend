@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
@@ -16,14 +16,15 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpFoundation\Response;
 use OpenApi\Annotations as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 class PassportAuthController extends Controller
 {
     public function __construct(
         private readonly AuthService $authService
-    ) {}
+    ) {
+    }
 
     /**
      * @OA\Post(
@@ -101,7 +102,7 @@ class PassportAuthController extends Controller
      *     path="/auth/login",
      *     summary="Realiza login do usuário",
      *     description="Autentica o usuário e retorna um token de acesso",
-     *     operationId="login", 
+     *     operationId="login",
      *     tags={"Autenticação"},
      *     @OA\RequestBody(
      *         required=true,

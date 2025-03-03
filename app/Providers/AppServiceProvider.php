@@ -68,7 +68,9 @@ class AppServiceProvider extends ServiceProvider
     */
     private function setupLogViewer(): void
     {
-        if (app()->environment('production')) LogViewer::auth(fn ($request) => $request->user()?->is_admin);
+        if (app()->environment('production')) {
+            LogViewer::auth(fn ($request) => $request->user()?->is_admin);
+        }
     }
 
     /**
@@ -103,7 +105,9 @@ class AppServiceProvider extends ServiceProvider
      */
     private function configUrls(): void
     {
-        if (app()->environment('production')) URL::forceHttps();
+        if (app()->environment('production')) {
+            URL::forceHttps();
+        }
     }
 
     /**

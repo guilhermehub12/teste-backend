@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
@@ -21,7 +21,7 @@ use OpenApi\Annotations as OA;
  *         url="https://opensource.org/licenses/MIT"
  *     )
  * )
- * 
+ *
  * @OA\Tag(
  *     name="Autenticação",
  *     description="Gerenciamento de autenticação de usuários",
@@ -34,12 +34,12 @@ use OpenApi\Annotations as OA;
  *     name="Posts",
  *     description="Gerenciamento de posts"
  * )
- * 
+ *
  *  @OA\Server(
  *      url=L5_SWAGGER_CONST_HOST,
  *      description="API Server"
  * )
- * 
+ *
  */
 class Controller extends BaseController
 {

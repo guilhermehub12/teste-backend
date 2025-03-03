@@ -4,8 +4,8 @@ declare(strict_types = 1);
 
 namespace App\Repositories\Api;
 
-use App\DTO\Api\PostFilterDTO;
 use App\Contracts\Repository\Api\PostRepositoryInterface;
+use App\DTO\Api\PostFilterDTO;
 use App\Models\Api\Post;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

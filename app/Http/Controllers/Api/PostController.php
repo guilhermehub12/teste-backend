@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Http\Controllers\Api;
 
@@ -25,7 +25,8 @@ class PostController extends Controller
 {
     public function __construct(
         private PostService $postService
-    ) {}
+    ) {
+    }
 
     /**
      * @OA\Get(

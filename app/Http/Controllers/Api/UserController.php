@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Http\Controllers\Api;
 
@@ -13,8 +13,8 @@ use App\Http\Resources\Api\UserResource;
 use App\Services\Api\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 use OpenApi\Annotations as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @OA\Tag(
@@ -26,7 +26,8 @@ class UserController extends Controller
 {
     public function __construct(
         private UserService $userService
-    ) {}
+    ) {
+    }
 
     /**
      * @OA\Get(
