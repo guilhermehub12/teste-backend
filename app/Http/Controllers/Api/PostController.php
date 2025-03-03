@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
@@ -15,15 +15,86 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @OA\Tag(
+ *     name="Posts",
+ *     description="Gerenciamento de posts"
+ * )
+ */
 class PostController extends Controller
 {
     public function __construct(
         private PostService $postService
-    ) {
-    }
+    ) {}
 
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/posts",
+     *     summary="Listar posts",
+     *     description="Lista todos os posts com opções de filtro",
+     *     operationId="listPosts",
+     *     tags={"Posts"},
+     *     security={{"passport": {}}},
+     *     @OA\Parameter(
+     *         name="tag",
+     *         in="query",
+     *         description="Filtrar posts por tag",
+     *         required=false,
+     *         @OA\Schema(type="string", example="Laravel")
+     *     ),
+     *     @OA\Parameter(
+     *         name="query",
+     *         in="query",
+     *         description="Buscar posts por título ou conteúdo",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="per_page",
+     *         in="query",
+     *         description="Quantidade de posts por página",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=5)
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Exibindo todos os posts",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="message", type="string", example="Exibindo todos os posts"),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     @OA\Property(property="id", type="integer", example=1),
+     *                     @OA\Property(property="title", type="string", example="Título do Post"),
+     *                     @OA\Property(
+     *                         property="author",
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="nome", type="string", example="Nome do Autor"),
+     *                         @OA\Property(property="telefone", type="string", example="85999999999"),
+     *                         @OA\Property(property="email", type="string", example="autor@exemplo.com")
+     *                     ),
+     *                     @OA\Property(property="content", type="string"),
+     *                     @OA\Property(property="tags", type="array", @OA\Items(type="string"))
+     *                 )
+     *             ),
+     *             @OA\Property(
+     *                 property="meta",
+     *                 type="object",
+     *                 @OA\Property(property="total", type="integer"),
+     *                 @OA\Property(property="per_page", type="integer"),
+     *                 @OA\Property(property="current_page", type="integer"),
+     *                 @OA\Property(property="last_page", type="integer")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Post não encontrado"
+     *     )
+     * )
      */
     public function index(Request $request): JsonResponse
     {
@@ -48,7 +119,63 @@ class PostController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/posts",
+     *     summary="Criar novo post",
+     *     description="Cria um novo post",
+     *     operationId="storePost",
+     *     tags={"Posts"},
+     *     security={{"passport": {}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"title", "user_id", "content", "tags"},
+     *             @OA\Property(property="title", type="string", example="Título do Post", description="Título do post"),
+     *             @OA\Property(property="user_id", type="integer", example=1, description="ID do usuário que está criando o post"),
+     *             @OA\Property(property="content", type="string", example="Conteúdo detalhado do post", description="Conteúdo do post"),
+     *             @OA\Property(
+     *                 property="tags",
+     *                 type="array",
+     *                 description="Tags relacionadas ao post",
+     *                 @OA\Items(type="string"),
+     *                 example={"Laravel", "PHP", "API"}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Post criado com sucesso",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="message", type="string", example="Post criado com sucesso"),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="object",
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="title", type="string", example="Título do Post"),
+     *                 @OA\Property(
+     *                     property="author",
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer", example=1),
+     *                     @OA\Property(property="nome", type="string", example="Nome do Autor"),
+     *                     @OA\Property(property="telefone", type="string", example="85999999999"),
+     *                     @OA\Property(property="email", type="string", example="autor@exemplo.com")
+     *                 ),
+     *                 @OA\Property(property="content", type="string", example="Conteúdo detalhado do post"),
+     *                 @OA\Property(property="tags", type="array", @OA\Items(type="string")),
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Erro de validação",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=false),
+     *             @OA\Property(property="message", type="string", example="Post não criado"),
+     *             @OA\Property(property="errors", type="object")
+     *         )
+     *     )
+     * )
      */
     public function store(StorePostRequest $request): JsonResponse
     {
@@ -70,7 +197,49 @@ class PostController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/posts/{id}",
+     *     summary="Exibir post específico",
+     *     description="Retorna os dados de um post específico",
+     *     operationId="showPost",
+     *     tags={"Posts"},
+     *     security={{"passport": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID do post",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Exibindo post",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="message", type="string", example="Post encontrado"),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="object",
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="title", type="string", example="Título do Post"),
+     *                 @OA\Property(
+     *                     property="author",
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer", example=1),
+     *                     @OA\Property(property="nome", type="string", example="Nome do Autor"),
+     *                     @OA\Property(property="telefone", type="string", example="85999999999"),
+     *                     @OA\Property(property="email", type="string", example="autor@exemplo.com")
+     *                 ),
+     *                 @OA\Property(property="content", type="string", example="Conteúdo detalhado do post"),
+     *                 @OA\Property(property="tags", type="array", @OA\Items(type="string")),
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Post não encontrado"
+     *     )
+     * )
      */
     public function show(string $id): JsonResponse
     {
@@ -86,12 +255,71 @@ class PostController extends Controller
         return $this->sendResponse(
             token: null,
             result: new PostResource($post),
-            message: PostConstants::MESSAGES['POSTS_FOUND']
+            message: PostConstants::MESSAGES['POST_SHOW']
         );
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *     path="/posts/{id}",
+     *     summary="Atualizar post",
+     *     description="Atualiza os dados de um determinado post",
+     *     operationId="updatePost",
+     *     tags={"Posts"},
+     *     security={{"passport": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID do post",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="title", type="string", example="Novo Título do Post"),
+     *             @OA\Property(property="content", type="string", example="Novo conteúdo do post"),
+     *             @OA\Property(
+     *                 property="tags",
+     *                 type="array",
+     *                 @OA\Items(type="string"),
+     *                 example={"Laravel", "PHP", "API"}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Post atualizado com sucesso",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="message", type="string", example="Post atualizado com sucesso"),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="object",
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="title", type="string", example="Novo Título do Post"),
+     *                 @OA\Property(
+     *                     property="author",
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer", example=1),
+     *                     @OA\Property(property="nome", type="string", example="Nome do Autor"),
+     *                     @OA\Property(property="telefone", type="string", example="85999999999"),
+     *                     @OA\Property(property="email", type="string", example="autor@exemplo.com")
+     *                 ),
+     *                 @OA\Property(property="content", type="string", example="Novo conteúdo do post"),
+     *                 @OA\Property(property="tags", type="array", @OA\Items(type="string")),
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Erro de validação"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Post não encontrado"
+     *     )
+     * )
      */
     public function update(UpdatePostRequest $request, string $id): JsonResponse
     {
@@ -112,7 +340,38 @@ class PostController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/posts/{id}",
+     *     summary="Remover post",
+     *     description="Remove um determinado post",
+     *     operationId="deletePost",
+     *     tags={"Posts"},
+     *     security={{"passport": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID do post",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Post deletado com sucesso",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="message", type="string", example="Post deletado com sucesso"),
+     *             @OA\Property(property="data", type="array", @OA\Items())
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Post não encontrado",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=false),
+     *             @OA\Property(property="message", type="string", example="Post não encontrado")
+     *         )
+     *     )
+     * )
      */
     public function destroy(string $id): JsonResponse
     {
