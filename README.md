@@ -511,8 +511,3 @@ Distribuído sob a [MIT License](LICENSE).
 
 - **Autenticação e Autorização:**  
   Implementado com Passport para proteger as rotas da API.
-
-- **Dockerização e Deploy:**  
-  A aplicação está dockerizada e preparada para deploy em ambientes como AWS, Heroku ou GCP.
-
-```
