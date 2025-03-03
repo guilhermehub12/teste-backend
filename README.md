@@ -93,7 +93,8 @@ Esta API foi desenvolvida para um CMS, onde é possível gerenciar postagens (co
 git clone https://github.com/guilhermehub12/teste-backend.git
 cd teste-backend
 composer install
-npm install && npm run dev
+php artisan passport:client --personal
+npm install
 php artisan serve
 ```
 
