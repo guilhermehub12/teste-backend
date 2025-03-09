@@ -85,9 +85,9 @@ class PassportAuthController extends Controller
             $token = $this->authService->createUserToken($user);
 
             return $this->sendResponse(
-                token: $token,
                 result: new UserResource($user),
-                message: AuthConstants::MESSAGES['REGISTER_SUCCESS']
+                message: AuthConstants::MESSAGES['REGISTER_SUCCESS'],
+                token: $token,
             );
         } catch (UserRegistrationException $e) {
             return $this->sendError(
@@ -152,9 +152,9 @@ class PassportAuthController extends Controller
                 $token = $this->authService->createUserToken($user);
 
                 return $this->sendResponse(
-                    token: $token,
                     result: new UserResource($user),
-                    message: AuthConstants::MESSAGES['LOGIN_SUCCESS']
+                    message: AuthConstants::MESSAGES['LOGIN_SUCCESS'],
+                    token: $token,
                 );
             }
 
@@ -203,9 +203,9 @@ class PassportAuthController extends Controller
             $user->tokens()->delete();
 
             return $this->sendResponse(
-                token: null,
                 result: null,
-                message: AuthConstants::MESSAGES['LOGOUT_SUCCESS']
+                message: AuthConstants::MESSAGES['LOGOUT_SUCCESS'],
+                token: null,
             );
         } catch (\Throwable $th) {
             return $this->sendError(
@@ -257,9 +257,9 @@ class PassportAuthController extends Controller
 
         if ($user) {
             return $this->sendResponse(
-                token: null,
                 result: new UserResource($user),
-                message: AuthConstants::MESSAGES['PROFILE_FOUND']
+                message: AuthConstants::MESSAGES['PROFILE_FOUND'],
+                token: null,
             );
         }
 

@@ -94,9 +94,9 @@ class UserController extends Controller
         $users = $this->userService->getAll($request);
 
         return $this->sendResponse(
-            token: null,
             result: UserResource::collection($users),
-            message: AuthConstants::MESSAGES['LIST_SUCCESS']
+            message: AuthConstants::MESSAGES['LIST_SUCCESS'],
+            token: null,
         );
     }
 
@@ -155,9 +155,9 @@ class UserController extends Controller
         $user = $this->userService->create($data);
 
         return $this->sendResponse(
-            token: null,
             result: new UserResource($user),
-            message: AuthConstants::MESSAGES['REGISTER_SUCCESS']
+            message: AuthConstants::MESSAGES['REGISTER_SUCCESS'],
+            token: null,
         );
     }
 
@@ -212,9 +212,9 @@ class UserController extends Controller
         }
 
         return $this->sendResponse(
-            token: null,
             result: new UserResource($user),
-            message: AuthConstants::MESSAGES['USER_FOUND']
+            message: AuthConstants::MESSAGES['USER_FOUND'],
+            token: null,
         );
     }
 
@@ -274,9 +274,9 @@ class UserController extends Controller
 
         if ($user !== false) {
             return $this->sendResponse(
-                token: null,
                 result: new UserResource($user),
-                message: AuthConstants::MESSAGES['USER_UPDATED']
+                message: AuthConstants::MESSAGES['USER_UPDATED'],
+                token: null,
             );
         }
 
@@ -321,9 +321,9 @@ class UserController extends Controller
 
         if ($user !== false) {
             return $this->sendResponse(
-                token: null,
                 result: [],
-                message: AuthConstants::MESSAGES['USER_DELETED']
+                message: AuthConstants::MESSAGES['USER_DELETED'],
+                token: null,
             );
         }
 

@@ -113,9 +113,9 @@ class PostController extends Controller
         }
 
         return $this->sendResponse(
-            token: null,
             result: PostResource::collection($posts),
-            message: PostConstants::MESSAGES['POST_INDEX']
+            message: PostConstants::MESSAGES['POST_INDEX'],
+            token: null,
         );
     }
 
@@ -191,9 +191,9 @@ class PostController extends Controller
         }
 
         return $this->sendResponse(
-            token: null,
             result: new PostResource($post),
-            message: PostConstants::MESSAGES['POST_CREATED']
+            message: PostConstants::MESSAGES['POST_CREATED'],
+            token: null,
         );
     }
 
@@ -254,9 +254,9 @@ class PostController extends Controller
         }
 
         return $this->sendResponse(
-            token: null,
             result: new PostResource($post),
-            message: PostConstants::MESSAGES['POST_SHOW']
+            message: PostConstants::MESSAGES['POST_SHOW'],
+            token: null,
         );
     }
 
@@ -328,9 +328,9 @@ class PostController extends Controller
 
         if ($post !== false) {
             return $this->sendResponse(
-                token: null,
                 result: new PostResource($post),
-                message: PostConstants::MESSAGES['POST_UPDATED']
+                message: PostConstants::MESSAGES['POST_UPDATED'],
+                token: null,
             );
         }
 
@@ -380,9 +380,9 @@ class PostController extends Controller
 
         if ($post !== false) {
             return $this->sendResponse(
-                token: null,
                 result: [],
-                message: PostConstants::MESSAGES['POST_DELETED']
+                message: PostConstants::MESSAGES['POST_DELETED'],
+                token: null,
             );
         }
 
