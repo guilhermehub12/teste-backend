@@ -8,7 +8,7 @@ use Illuminate\Http\JsonResponse;
 
 trait ApiResponse
 {
-    public function sendResponse($result, $message, $token = null): JsonResponse
+    public function sendResponse($result, string $message, ?string $token): JsonResponse
     {
         $response = [
             'success' => true,
